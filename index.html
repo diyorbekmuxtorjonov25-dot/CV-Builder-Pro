@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI CV Maker</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&family=Space+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/evidenceprime/html-docx-js/dist/html-docx.js"></script>
+</head>
+<body>
+    <div class="bg-decoration"></div>
+
+    <div class="container">
+        <header>
+            <h1 data-i18n="title">CV Builder Pro</h1>
+            <div class="controls">
+                <div class="select-wrapper">
+                    <i class="fas fa-palette"></i>
+                    <select id="theme-select" onchange="changeTheme()">
+                        <option value="theme-classic">Classic (Moviy)</option>
+                        <option value="theme-modern">Modern (To'q)</option>
+                        <option value="theme-minimal">Minimalist</option>
+                        <option value="theme-neo">Neo-Brutalism (Bold)</option>
+                        <option value="theme-executive">Executive (Premium)</option>
+                        <option value="theme-soft">Soft UI (Minimal)</option>
+                        <option value="theme-elegant">Elegant (Siyohrang)</option>
+                        <option value="theme-midnight">Midnight (To'q ko'k)</option>
+                        <option value="theme-eco">Eco (Yashil)</option>
+                        <option value="theme-sidebar-left">Sidebar Left (Professional)</option>
+                        <option value="theme-timeline">Timeline (Xronologik)</option>
+                        <option value="theme-future">Future (Neon/Tech)</option>
+                        <option value="theme-royal">Royal (Oltin/Hashamat)</option>
+                        <option value="theme-grid-two">Grid Two (2 ustunli)</option>
+                        <option value="theme-newspaper">Newspaper (Gazeta uslubi)</option>
+                        <option value="theme-gradient-pro">Gradient Pro (Zamonaviy)</option>
+                        <option value="theme-compact-dark">Compact Dark (Zich)</option>
+                        <option value="theme-tokyo">Tokyo Night (Deep Blue)</option>
+                        <option value="theme-matcha">Matcha (Green/Cream)</option>
+                        <option value="theme-sunset">Sunset (Warm)</option>
+                        <option value="theme-coffee">Coffee (Browns)</option>
+                        <option value="theme-slate">Slate (Professional Grey)</option>
+                        <option value="theme-indigo">Indigo (Deep Purple)</option>
+                        <option value="theme-crimson">Crimson (Bold Red)</option>
+                        <option value="theme-forest">Forest (Nature)</option>
+                        <option value="theme-monokai">Monokai (Dev Dark)</option>
+                        <option value="theme-solarized">Solarized (Comfortable)</option>
+                        <option value="theme-nord">Nord (Arctic Blue)</option>
+                        <option value="theme-dracula">Dracula (Classic Purple)</option>
+                        <option value="theme-material">Material (Google Style)</option>
+                        <option value="theme-cupertino">Cupertino (Apple Style)</option>
+                        <option value="theme-retro">Retro 80s (Vaporwave)</option>
+                        <option value="theme-terminal">Terminal (Hacker)</option>
+                        <option value="theme-parchment">Parchment (Ancient)</option>
+                        <option value="theme-lavender">Lavender (Calm)</option>
+                        <option value="theme-rosegold">Rose Gold (Premium)</option>
+                        <option value="theme-marble">Marble (Classy)</option>
+                        <option value="theme-concrete">Concrete (Industrial)</option>
+                        <option value="theme-ocean">Ocean (Waves)</option>
+                        <option value="theme-desert">Desert (Warm Sand)</option>
+                        <option value="theme-high-contrast">High Contrast (B&W)</option>
+                        <option value="theme-pastel">Pastel (Soft)</option>
+                        <option value="theme-bauhaus">Bauhaus (Geometric)</option>
+                        <option value="theme-corporate">Corporate (Standard)</option>
+                        <option value="theme-academic">Academic (Traditional)</option>
+                        <option value="theme-startup">Startup (Modern Web)</option>
+                        <option value="theme-luxury">Luxury (Gold/Black)</option>
+                        <option value="theme-organic">Organic (Earth Tones)</option>
+                        <option value="theme-cyberpunk">Cyberpunk (Neon Pink)</option>
+                        <option value="theme-oxford">Oxford (Classic Navy)</option>
+                    </select>
+                </div>
+                <div class="select-wrapper">
+                    <i class="fas fa-language"></i>
+                    <select id="lang-select" onchange="changeLanguage()">
+                        <option value="uz" selected>O'zbekcha</option>
+                        <option value="ru">Русский</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                <button onclick="downloadPDF()" class="btn-pdf" data-i18n="btnPdf">PDF Yuklash</button>
+                <button onclick="downloadWord()" class="btn-word" data-i18n="btnWord">Word Yuklash</button>
+                <button onclick="saveCV()" class="btn-save" data-i18n="btnSave">Saqlash (Backend)</button>
+            </div>
+        </header>
+
+        <main>
+            <section class="editor">
+                <div class="editor-header">
+                    <i class="fas fa-edit"></i>
+                    <h3>Ma'lumotlarni kiriting</h3>
+                </div>
+                
+                <div class="editor-section">
+                    <div class="section-tag" data-i18n="tagMain">Asosiy</div>
+                    <div class="input-group">
+                        <label for="in-photo"><i class="fas fa-camera"></i> <span data-i18n="labelPhoto">Profil rasmi:</span></label>
+                        <input type="file" id="in-photo" accept="image/*" onchange="handleImage(event)">
+                    </div>
+
+                    <div class="input-grid">
+                        <input type="text" id="in-name" data-i18n-placeholder="placeholderName" placeholder="To'liq ismingiz" oninput="updateCV()">
+                        <input type="text" id="in-job" data-i18n-placeholder="placeholderJob" placeholder="Kasbingiz" oninput="updateCV()">
+                    </div>
+
+                    <div class="input-grid">
+                        <div class="input-with-button">
+                            <input type="email" id="in-email" data-i18n-placeholder="placeholderEmail" placeholder="Email" oninput="updateCV()">
+                            <button onclick="loadCV()" class="btn-load" title="Yuklash"><i class="fas fa-cloud-download-alt"></i></button>
+                        </div>
+                        <input type="tel" id="in-phone" data-i18n-placeholder="placeholderPhone" placeholder="Telefon raqami" oninput="updateCV()">
+                    </div>
+                    <input type="text" id="in-address" data-i18n-placeholder="placeholderAddress" placeholder="Manzilingiz" oninput="updateCV()">
+                </div>
+
+                <div class="editor-section">
+                    <div class="section-tag" data-i18n="tagSocial">Ijtimoiy</div>
+                    <div class="input-grid">
+                        <label for="in-linkedin" class="sr-only" data-i18n="labelLinkedin">LinkedIn profili</label>
+                        <div class="icon-input">
+                            <i class="fab fa-linkedin"></i>
+                            <input type="text" id="in-linkedin" data-i18n-placeholder="placeholderLinkedin" placeholder="LinkedIn URL" oninput="updateCV()">
+                        </div>
+                        <label for="in-github" class="sr-only" data-i18n="labelGithub">GitHub profili</label>
+                        <div class="icon-input">
+                            <i class="fab fa-github"></i>
+                            <input type="text" id="in-github" data-i18n-placeholder="placeholderGithub" placeholder="GitHub URL" oninput="updateCV()">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="editor-section">
+                    <div class="section-tag" data-i18n="tagInfo">Ma'lumotlar</div>
+                    <label for="in-about"><i class="fas fa-user"></i> <span data-i18n="labelAbout">Men haqimda</span></label>
+                    <textarea id="in-about" data-i18n-placeholder="placeholderAbout" placeholder="O'zingiz haqingizda qisqacha..." oninput="updateCV()"></textarea> 
+                    
+                    <label for="in-edu"><i class="fas fa-graduation-cap"></i> <span data-i18n="labelEdu">Ta'lim</span></label>
+                    <textarea id="in-edu" data-i18n-placeholder="placeholderEdu" placeholder="O'qish joyingiz, yillar..." oninput="updateCV()"></textarea> 
+
+                    <label for="in-exp"><i class="fas fa-briefcase"></i> <span data-i18n="labelExp">Ish tajribasi</span></label>
+                    <textarea id="in-exp" data-i18n-placeholder="placeholderExp" placeholder="Kompaniya nomi va vazifalaringiz..." oninput="updateCV()"></textarea> 
+
+                    <label for="in-skills"><i class="fas fa-tools"></i> <span data-i18n="labelSkills">Ko'nikmalar (vergul bilan ajrating)</span></label>
+                    <textarea id="in-skills" data-i18n-placeholder="placeholderSkills" placeholder="JavaScript, Python, React..." oninput="updateCV()"></textarea> 
+                </div>
+            </section>
+
+            <section class="preview-area">
+                <div id="cv-template" class="cv-paper theme-classic">
+                    <div class="cv-top">
+                        <img id="out-photo" src="https://via.placeholder.com/150" alt="Profil rasmi">
+                        <div class="cv-header-text">
+                            <h2 id="out-name" data-i18n="previewName">Ism Familiya</h2>
+                            <p id="out-job" class="job-title" data-i18n="previewJob">Sizning Kasbingiz</p>
+                        </div>
+                    </div>
+                    <div class="cv-body">
+                        <div class="section">
+                            <h4 class="sec-title" id="t-about" data-i18n="previewAbout">Men haqimda</h4>
+                            <p id="out-about" data-i18n="previewAboutText">Ma'lumotlar bu yerda ko'rinadi...</p>
+                        </div>
+                        <div class="section" id="sec-edu">
+                            <h4 class="sec-title" data-i18n="previewEdu">Ta'lim</h4>
+                            <p id="out-edu" data-i18n="previewEduText">O'qish joyingiz...</p>
+                        </div>
+                        <div class="section">
+                            <h4 class="sec-title" id="t-exp" data-i18n="previewExp">Ish tajribasi</h4>
+                            <p id="out-exp" data-i18n="previewExpText">Kompaniya nomi va vazifalaringiz...</p>
+                        </div>
+                        <div class="section" id="sec-skills">
+                            <h4 class="sec-title" data-i18n="previewSkills">Ko'nikmalar</h4>
+                            <div id="out-skills" class="skills-container">
+                                <!-- Ko'nikmalar bu yerda paydo bo'ladi -->
+                            </div>
+                        </div>
+                        <div class="section">
+                            <h4 class="sec-title" id="t-contact" data-i18n="previewContact">Aloqa</h4>
+                            <p><i class="fas fa-envelope"></i> <span id="out-email" data-i18n="previewEmail">Email manzilingiz</span></p>
+                            <p><i class="fas fa-phone"></i> <span id="out-phone" data-i18n="previewPhone">Telefon raqamingiz</span></p>
+                            <p><i class="fas fa-map-marker-alt"></i> <span id="out-address" data-i18n="previewAddress">Manzilingiz</span></p>
+                            <div class="social-links-out" id="out-socials"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="javascript.js"></script>
+</body>
+</html>
